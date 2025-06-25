@@ -3,8 +3,11 @@ from src.detection import run_detection
 from src.violation_logic import check_illegal_parking, check_wrong_way
 from src.digital_twin import plot_digital_twin
 from src.map_view import draw_map_view
+
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from PIL import Image
+
 
 def show_dashboard():
     st.set_page_config(page_title="Smart Traffic Dashboard", layout="wide")
@@ -22,11 +25,12 @@ def show_dashboard():
         st.success("✅ 图片上传成功")
     else:
         st.warning("⚠️ 未上传图片，将使用默认 sample.jpg")
+        img_path = "sample.jpg"
 
     # 🚀 开始检测
     if st.button("🚗 开始检测与分析"):
         with st.spinner("正在进行交通违规检测与图像分析..."):
-            detections = run_detection(source="sample.jpg")
+            detections = run_detection(source=img_path)
 
             # ✨ 违规逻辑分析
             parking_violations = check_illegal_parking(detections)
@@ -35,12 +39,12 @@ def show_dashboard():
 
             # 📊 可视化展示
             col1, col2 = st.columns(2)
+
             with col1:
                 st.subheader("📷 检测结果图像")
-                fig, ax = plt.subplots(figsize=(6, 6))
-                ax.set_xlim(0, 400)
-                ax.set_ylim(0, 400)
-                ax.set_facecolor("lightgray")
+                image = Image.open(img_path)
+                fig, ax = plt.subplots()
+                ax.imshow(image)
 
                 for item in detections:
                     x1, y1, x2, y2 = item["bbox"]
@@ -52,7 +56,7 @@ def show_dashboard():
                     ax.add_patch(rect)
                     ax.text(x1, y1 - 10, label, color=color, fontsize=10)
 
-                ax.invert_yaxis()  # 如果图像坐标系与预期反向
+                ax.axis("off")
                 st.pyplot(fig)
 
             with col2:
