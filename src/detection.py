@@ -1,7 +1,6 @@
 # src/detection.py
 
 import numpy as np
-import cv2
 
 def run_detection(source="sample.jpg"):
     print(f"✅ 模拟检测已执行（处理图片: {source}）")
