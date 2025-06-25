@@ -1,0 +1,16 @@
+# 虚拟环境
+venv/
+.venv/
+
+# PyTorch / 模型文件
+*.pt
+
+# 大型库文件
+*.dylib
+*.so
+*.dll
+
+# 输出图像或缓存
+*.jpg
+*.png
+__pycache__/
