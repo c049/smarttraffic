@@ -1,11 +1,10 @@
-# src/dashboard.py
-
 import streamlit as st
 from src.detection import run_detection
 from src.violation_logic import check_illegal_parking, check_wrong_way
 from src.digital_twin import plot_digital_twin
 from src.map_view import draw_map_view
-import os
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 def show_dashboard():
     st.set_page_config(page_title="Smart Traffic Dashboard", layout="wide")
@@ -37,14 +36,35 @@ def show_dashboard():
             # 📊 可视化展示
             col1, col2 = st.columns(2)
             with col1:
-                st.image("output.jpg", caption="检测结果图像", use_column_width=True)
+                st.subheader("📷 检测结果图像")
+                fig, ax = plt.subplots(figsize=(6, 6))
+                ax.set_xlim(0, 400)
+                ax.set_ylim(0, 400)
+                ax.set_facecolor("lightgray")
+
+                for item in detections:
+                    x1, y1, x2, y2 = item["bbox"]
+                    label = item["label"]
+                    color = 'red' if item["type"] == "wrong_way" else 'blue'
+
+                    rect = patches.Rectangle((x1, y1), x2 - x1, y2 - y1,
+                                             linewidth=2, edgecolor=color, facecolor='none')
+                    ax.add_patch(rect)
+                    ax.text(x1, y1 - 10, label, color=color, fontsize=10)
+
+                ax.invert_yaxis()  # 如果图像坐标系与预期反向
+                st.pyplot(fig)
+
             with col2:
                 st.subheader("违规行为列表")
                 for v in all_violations:
-                    st.markdown(f"- 🚨 **{v['type']}** by `{v['label']}` at `{v['location']}` (置信度 {v['confidence']})")
+                    st.markdown(
+                        f"- 🚨 **{v['type']}** by `{v['label']}` at `{v.get('location', v.get('center'))}`"
+                        f" (置信度 {v.get('confidence', 'N/A')})"
+                    )
 
             st.subheader("🧠 数字孪生视图")
             plot_digital_twin(detections, all_violations)
 
             st.subheader("🗺️ 地图可视化")
-            draw_map_view(detections)
+            draw_map_view(detections, all_violations)
