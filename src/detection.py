@@ -3,7 +3,6 @@
 def run_detection(source="sample.jpg"):
     print(f"✅ 模拟检测已执行（处理图片: {source}）")
 
-    # 返回模拟检测数据（不需要用 cv2，也不保存图片）
     detection_data = [
         {
             "type": "illegal_parking",
