@@ -16,7 +16,7 @@ def show_dashboard():
     st.markdown("Combining computer vision and digital twin technologies for real-time monitoring and visualization of illegal parking 🚗 and wrong-way driving 🏍️.")
 
     # 📤 Upload an image.
-    uploaded_file = st.file_upload("📤 Upload an image for detection (or use default sample.jpg)", type=["jpg", "png"])
+    uploaded_file = st.file_uploader("📤 Upload an image for detection (or use default sample.jpg)", type=["jpg", "png"])
 
     if uploaded_file is not None:
         img_path = "sample.jpg"
