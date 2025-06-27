@@ -11,6 +11,7 @@ venv/
 *.dll
 
 # 输出图像或缓存
-*.jpg
-*.png
+ # *.jpg
+ # *.png
+
 __pycache__/

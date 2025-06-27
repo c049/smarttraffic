@@ -115,7 +115,7 @@ def show_dashboard():
         st.markdown("""
         This demo showcases real-time detection via a YOLOv8-based urban surveillance system. It accurately identifies buses, pedestrians, and signs, allowing enforcement of illegal parking and wrong-way driving. All results are visualized in a dashboard for automated violation analysis and enforcement.
         """)
-        st.image("assets/results_demo.png", caption="Detection and 3D Digital Twin Visualization")
+        st.image("assets/resultdemo.png", caption="Detection and 3D Digital Twin Visualization")
 
     with st.expander("📌 Conclusion"):
         st.markdown("""
