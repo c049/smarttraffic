@@ -24,8 +24,8 @@ def show_dashboard():
             f.write(uploaded_file.read())
         st.success("✅ Image uploaded successfully")
     else:
-        st.warning("⚠️ No image uploaded. Using default sample.jpg")
-        img_path = "sample.jpg"
+        st.warning("⚠️ No image uploaded. Using default Sample.jpeg")
+        img_path = "assets/Sample.jpeg"
 
     # 🚀 Start detection
     if st.button("🚗 Start Detection & Analysis"):
