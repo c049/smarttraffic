@@ -63,9 +63,10 @@ def show_dashboard():
                 st.subheader("违规行为列表")
                 for v in all_violations:
                     st.markdown(
-                        f"- 🚨 **{v['type']}** by `{v['label']}` at `{v.get('location', v.get('center'))}`"
-                        f" (置信度 {v.get('confidence', 'N/A')})"
+                     f"- 🚨 **{v.get('type', '未知类型')}** by `{v.get('label', '未知目标')}` at `{v.get('location', v.get('center', '未知位置'))}`"
+                     f" (置信度 {v.get('confidence', 'N/A')})"
                     )
+
 
             st.subheader("🧠 数字孪生视图")
             plot_digital_twin(detections, all_violations)
