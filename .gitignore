@@ -1,16 +1,16 @@
-# 虚拟环境
+# Virtual environment
 venv/
 .venv/
 
-# PyTorch / 模型文件
+# PyTorch / model files
 *.pt
 
-# 大型库文件
+# Large binary files
 *.dylib
 *.so
 *.dll
 
-# 输出图像或缓存
+# Output image cache
  # *.jpg
  # *.png
 

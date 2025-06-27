@@ -11,27 +11,27 @@ def draw_map_view(detections, violations):
     """
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # 背景路段
+    # Background road section
     ax.set_facecolor("lightgray")
     ax.set_xlim(0, 800)
     ax.set_ylim(0, 600)
 
-    # 道路线条（双车道）
+    # Lane divider (double yellow line)
     ax.add_patch(patches.Rectangle((0, 250), 800, 100, color="white", zorder=0))
     ax.plot([0, 800], [300, 300], linestyle="--", color="gray")
 
-    # 禁停区域
+    # No-parking areas
     ax.add_patch(patches.Rectangle((100, 350), 100, 50, color="red", alpha=0.4))
     ax.add_patch(patches.Rectangle((600, 200), 100, 50, color="red", alpha=0.4))
 
-    # 方向箭头
+    # Direction arrow
     ax.arrow(50, 280, 100, 0, head_width=10, head_length=20, fc='black', ec='black')
     ax.text(60, 290, "→", fontsize=15, weight='bold')
 
-    # 提取违章中心点列表
+    # Extract violation coordinates
     violation_centers = [tuple(v.get("center", [0, 0])) for v in violations]
 
-    # 绘制车辆（红：违章，蓝：正常）
+    # Draw objects (car, motorcycle)
     for obj in detections:
         cx, cy = obj["center"]
         label = obj["label"]

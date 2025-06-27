@@ -13,35 +13,35 @@ def show_dashboard():
     st.set_page_config(page_title="Smart Traffic Dashboard", layout="wide")
 
     st.title("🚦AI + Digital Twin Traffic Violation Detection")
-    st.markdown("利用计算机视觉 + 数字孪生技术，实现违章停车 🚗 和 逆行 🏍️ 实时监测与可视化。")
+    st.markdown("Combining computer vision and digital twin technologies for real-time monitoring and visualization of illegal parking 🚗 and wrong-way driving 🏍️.")
 
-    # 📤 上传图像
-    uploaded_file = st.file_uploader("📤 上传待检测图片（或使用默认 sample.jpg）", type=["jpg", "png"])
+    # 📤 Upload an image.
+    uploaded_file = st.file_upload("📤 Upload an image for detection (or use default sample.jpg)", type=["jpg", "png"])
 
     if uploaded_file is not None:
         img_path = "sample.jpg"
         with open(img_path, "wb") as f:
             f.write(uploaded_file.read())
-        st.success("✅ 图片上传成功")
+        st.success("✅ Image uploaded successfully")
     else:
-        st.warning("⚠️ 未上传图片，将使用默认 sample.jpg")
+        st.warning("⚠️ No image uploaded. Using default sample.jpg")
         img_path = "sample.jpg"
 
-    # 🚀 开始检测
-    if st.button("🚗 开始检测与分析"):
-        with st.spinner("正在进行交通违规检测与图像分析..."):
+    # 🚀 Start detection
+    if st.button("🚗 Start Detection & Analysis"):
+        with st.spinner("Running traffic violation detection and image analysis..."):
             detections = run_detection(source=img_path)
 
-            # ✨ 违规逻辑分析
+            # ✨ Violation logic
             parking_violations = check_illegal_parking(detections)
             wrong_way_violations = check_wrong_way(detections)
             all_violations = parking_violations + wrong_way_violations
 
-            # 📊 可视化展示
+            # 📊 Visualization
             col1, col2 = st.columns(2)
 
             with col1:
-                st.subheader("📷 检测结果图像")
+                st.subheader("📷 Detection Result Image")
                 image = Image.open(img_path)
                 fig, ax = plt.subplots()
                 ax.imshow(image)
@@ -60,22 +60,22 @@ def show_dashboard():
                 st.pyplot(fig)
 
             with col2:
-                st.subheader("违规行为列表")
+                st.subheader("🚨 Violation List")
                 for v in all_violations:
                     st.markdown(
-                     f"- 🚨 **{v.get('type', '未知类型')}** by `{v.get('label', '未知目标')}` at `{v.get('location', v.get('center', '未知位置'))}`"
-                     f" (置信度 {v.get('confidence', 'N/A')})"
+                     f"- 🚨 **{v.get('type', 'Unknown Type')}** by `{v.get('label', 'Unknown Label')}` at `{v.get('location', v.get('center', 'Unknown Location'))}`"
+                     f" (Confidence: {v.get('confidence', 'N/A')})"
                     )
 
 
-            st.subheader("🧠 数字孪生视图")
+            st.subheader("🧠 Digital Twin Visualization")
             plot_digital_twin(detections, all_violations)
 
-            st.subheader("🗺️ 地图可视化")
+            st.subheader("🗺️ Map Visualization")
             draw_map_view(detections, all_violations)
 
     st.markdown("---")
-    st.header("📘 项目背景与详细介绍")
+    st.header("📘 Project Background & Description")
 
     with st.expander("📖 Introduction"):
         st.markdown("""

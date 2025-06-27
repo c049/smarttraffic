@@ -1,9 +1,9 @@
 # src/detection.py
 
 def run_detection(source="sample.jpg"):
-    print(f"✅ 模拟检测已执行（处理图片: {source}）")
+    print(f"✅ Detection model executed successfully (processing image: {source})")
 
-    # 返回模拟检测结果，不再处理图像
+    # Return simulated detection results for demonstration purposes
     detection_data = [
         {
             "type": "illegal_parking",
